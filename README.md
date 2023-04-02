@@ -15,5 +15,14 @@ The scripts will also create the "accounts" database
 
 #### Step 2:
 
-Start the spring boot application. The first
+Connect to kafka manager at http://localhost:9000
+- Choose Cluster -> Add Cluster
+- Cluster Name: CDCCluster
+- Cluster Zookeeper Hosts: zookeeper:2181
+- Save
+- Go to Cluster View
+
+#### Step 3:
+
+Start the spring boot application. 
 
