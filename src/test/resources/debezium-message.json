@@ -208,8 +208,8 @@
     "after": {
       "id": "E2A478B0-ED85-4601-87F8-E2390C4AC449",
       "name": "Mike",
-      "bankName": "Joe",
-      "accountNumber": "123",
+      "bank_name": "Joe",
+      "account_number": "123",
       "balance": "Aw1B",
       "type": "CHECKING"
     },
