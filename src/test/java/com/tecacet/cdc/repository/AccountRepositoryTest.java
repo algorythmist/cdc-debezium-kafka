@@ -37,6 +37,18 @@ class AccountRepositoryTest {
     }
 
     @Test
+    void findByTest() {
+        AccountEntity account = createEntity();
+        Optional<AccountEntity> foundAccount = accountRepository.findByBankNameAndAccountNumber(account.getBankName(), account.getAccountNumber());
+        assertTrue(foundAccount.isPresent());
+        assertEquals(account.getName(), foundAccount.get().getName());
+        assertEquals(account.getBankName(), foundAccount.get().getBankName());
+        assertEquals(account.getAccountNumber(), foundAccount.get().getAccountNumber());
+        assertEquals(account.getBalance(), foundAccount.get().getBalance());
+        assertEquals(account.getType(), foundAccount.get().getType());
+    }
+
+    @Test
     void updateAccountTest() {
         AccountEntity account = createEntity();
         account.setBalance(BigDecimal.valueOf(2000));
