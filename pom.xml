@@ -16,7 +16,6 @@
         <relativePath/>
     </parent>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,7 +65,6 @@
             <version>${h2.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <properties>
@@ -75,6 +73,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <h2.version>2.1.214</h2.version>
+        <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <mssql-jdbc.version>9.4.0.jre11</mssql-jdbc.version>
         <spring-kafka.version>2.9.6</spring-kafka.version>
@@ -94,7 +93,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.24</version>
+                            <version>${lombok.version}</version>
                         </path>
                         <path>
                             <groupId>org.mapstruct</groupId>
@@ -111,6 +110,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

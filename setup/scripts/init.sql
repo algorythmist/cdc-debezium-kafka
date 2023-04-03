@@ -8,8 +8,8 @@ GO
 CREATE TABLE account (
   id UNIQUEIDENTIFIER PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  bankName VARCHAR(255) NOT NULL,
-  accountNumber VARCHAR(255) NOT NULL,
+  bank_name VARCHAR(255) NOT NULL,
+  account_number VARCHAR(255) NOT NULL,
   balance DECIMAL(19,2) NOT NULL,
   type VARCHAR(10) NOT NULL
 );
