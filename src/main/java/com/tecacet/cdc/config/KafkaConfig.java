@@ -22,6 +22,9 @@ public class KafkaConfig {
 
     @Value(value = "${kafka.bootstrapAddress:localhost:29092}")
     private String bootstrapAddress;
+
+    private String groupId = "consumer-test-group";
+
     @Bean
     public ConsumerFactory<String, DebeziumMessage> consumerFactory() {
 
@@ -36,7 +39,8 @@ public class KafkaConfig {
 
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-consumer-group");
+
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), jsonDeserializer);
     }
 

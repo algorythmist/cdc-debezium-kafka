@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CdcChangeListener {
 
-    @KafkaListener(topics = "server1.accounts.dbo.account",
+    @KafkaListener(topics = "${kafka.topic}",
             containerFactory = "kafkaListenerContainerFactory")
     public void receive(DebeziumMessage message) {
         var payload = message.getPayload();
