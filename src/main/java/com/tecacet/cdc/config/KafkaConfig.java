@@ -1,6 +1,5 @@
 package com.tecacet.cdc.config;
 
-import com.tecacet.cdc.model.DebeziumMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +9,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.mapping.DefaultJackson2JavaTypeMapper;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,27 +23,26 @@ public class KafkaConfig {
     private String groupId = "consumer-test-group";
 
     @Bean
-    public ConsumerFactory<String, DebeziumMessage> consumerFactory() {
+    public ConsumerFactory<String, String> consumerFactory() {
 
-        DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
-        Map<String, Class<?>> classMap = new HashMap<>();
-        typeMapper.setIdClassMapping(classMap);
-        typeMapper.addTrustedPackages("*");
-
-        JsonDeserializer<DebeziumMessage> jsonDeserializer = new JsonDeserializer<>(DebeziumMessage.class);
-        jsonDeserializer.setTypeMapper(typeMapper);
-        jsonDeserializer.setUseTypeMapperForKey(true);
+//        DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
+//        Map<String, Class<?>> classMap = new HashMap<>();
+//        typeMapper.setIdClassMapping(classMap);
+//        typeMapper.addTrustedPackages("*");
+//
+//        JsonDeserializer<DebeziumMessage> jsonDeserializer = new JsonDeserializer<>(DebeziumMessage.class);
+//        jsonDeserializer.setTypeMapper(typeMapper);
+//        jsonDeserializer.setUseTypeMapperForKey(true);
 
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), jsonDeserializer);
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new StringDeserializer());
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, DebeziumMessage> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, DebeziumMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
