@@ -9,20 +9,14 @@ From the setup directory, run docker-compose. This will start the following serv
 - Zookeeper
 - Kafka
 - The Debezium connector
-- Kafka Manager
+- Kafka UI
 
-The scripts will also create the "accounts" database
+The scripts will also create the "accounts" database, which contains two schemas: dbo and cdc. 
+The dbo schema contains the account table, which is the table we are monitoring for changes. 
+The cdc schema contains the cdc table, which is where the CDC messages will be stored.
 
-#### Step 2:
 
-Connect to kafka manager at http://localhost:9000
-- Choose Cluster -> Add Cluster
-- Cluster Name: CDCCluster
-- Cluster Zookeeper Hosts: zookeeper:2181
-- Save
-- Go to Cluster View
-
-#### Step 3: 
+#### Step 2: 
 
 Start Debezium SQL Server connector
 
@@ -30,7 +24,7 @@ from the root directory:
 
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-sqlserver.json
 
-#### Step 4: 
+#### Step 3: 
 
 1. Start the spring boot application. 
 
@@ -40,9 +34,9 @@ curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json"
 
 ```json
 {
-  "name": "Groo",
+  "name": "Gru",
   "bankName": "Bank of Evil",
-  "accountNumber": "123",
+  "accountNumber": "666",
   "balance": 1000000,
   "type": "CHECKING"
 }
@@ -51,5 +45,14 @@ curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json"
 The listener will receive the change and display a message like this:
 
 ```text
-Received CDC change with payload: DebeziumMessage.Payload(before=null, after=DebeziumMessage.Value(id=27C63BDE-597E-1642-B6A8-50DD2F1637AD, name=Groo, bankName=Bank of Evil, accountNumber=123, balance=[5, -11, -31, 0], type=CHECKING), source=DebeziumMessage.Source(version=2.2.0.Alpha3, connector=sqlserver, name=server1, ts_ms=1680531761800, snapshot=false, db=accounts, sequence=null, schema=dbo, table=account, change_lsn=00000025:00000dc0:0002, commit_lsn=00000025:00000dc0:0003, event_serial_no=1), op=c, ts_ms=1680531762964, transactionBlock=null)
+Received CDC create for account 666 with balance 1000000.00
+
+#### Step 4:
+
+Connect to kafka ui at http://localhost:8081
+- Click "topics"
+- You will see a topic called "mssql.accounts.dbo.account". Click on it
+- Click on the messages tab to inspect the messages sent to the topic
+
+
 ```

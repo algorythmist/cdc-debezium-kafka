@@ -25,15 +25,6 @@ public class KafkaConfig {
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
 
-//        DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
-//        Map<String, Class<?>> classMap = new HashMap<>();
-//        typeMapper.setIdClassMapping(classMap);
-//        typeMapper.addTrustedPackages("*");
-//
-//        JsonDeserializer<DebeziumMessage> jsonDeserializer = new JsonDeserializer<>(DebeziumMessage.class);
-//        jsonDeserializer.setTypeMapper(typeMapper);
-//        jsonDeserializer.setUseTypeMapperForKey(true);
-
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);

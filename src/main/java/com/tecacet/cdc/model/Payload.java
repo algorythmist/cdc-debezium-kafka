@@ -7,6 +7,11 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Payload<T> {
+
+    public enum OperationType {
+        CREATE, UPDATE, DELETE
+    }
+
     private T before;
     private T after;
     private DebeziumMessage.Source source;
@@ -21,4 +26,18 @@ public class Payload<T> {
         private Long total_order;
         private Long data_collection_order;
     }
+
+    public OperationType getOperationType() {
+        switch (op) {
+            case "c":
+                return OperationType.CREATE;
+            case "u":
+                return OperationType.UPDATE;
+            case "d":
+                return OperationType.DELETE;
+            default:
+                throw new IllegalArgumentException("Unknown operation type " + op);
+        }
+    }
+
 }

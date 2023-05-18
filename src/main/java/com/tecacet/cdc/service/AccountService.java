@@ -26,11 +26,16 @@ public class AccountService {
 
     public Account updateAccount(Account account) {
         var entity = accountRepository.findByBankNameAndAccountNumber(account.getBankName(), account.getAccountNumber())
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         accountMapper.updateCustomerFromDto(account, entity);
         return accountMapper.toDto(accountRepository.save(entity));
     }
 
+    public void deleteAccount(String bankName, String accountNumber) {
+        var entity = accountRepository.findByBankNameAndAccountNumber(bankName, accountNumber)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
+        accountRepository.delete(entity);
+    }
 
     public List<Account> findAll() {
         return accountRepository.findAll().stream().map(accountMapper::toDto)

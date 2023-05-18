@@ -44,7 +44,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
-  connect:
+  debezium:
     image: quay.io/debezium/connect:latest
     ports:
       - 8083:8083
@@ -58,11 +58,13 @@ services:
       - OFFSET_STORAGE_TOPIC=connect_offsets
       - STATUS_STORAGE_TOPIC=connect_statuses
 
-  manager:
-    image: sheepkiller/kafka-manager
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
     ports:
-      - 9000:9000
+      - 8081:8080
+    links:
+      - kafka
     environment:
-      ZK_HOSTS: zookeeper:2181
-    depends_on:
-      - zookeeper
+      DYNAMIC_CONFIG_ENABLED: true
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
