@@ -22,7 +22,9 @@ Start Debezium SQL Server connector
 
 from the root directory:
 
+```bash
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-sqlserver.json
+```
 
 #### Step 3: 
 
@@ -46,6 +48,7 @@ The listener will receive the change and display a message like this:
 
 ```text
 Received CDC create for account 666 with balance 1000000.00
+```
 
 #### Step 4:
 
