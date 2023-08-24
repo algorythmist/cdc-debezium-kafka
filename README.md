@@ -22,15 +22,31 @@ Start Debezium SQL Server connector
 
 from the root directory:
 
+```bash
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @register-sqlserver.json
+```
 
-#### Step 3: 
+#### Step 3:
 
-1. Start the spring boot application. 
+Start the spring boot applications. 
 
-2. Go to http://localhost:8080/swagger-ui/index.html#/account-controller/createAccount
+1. Start the message receiver
+```commandline
+cd account-receiver
+mvn spring-boot:run
+```
 
-3. Create an account entering a request body like this:
+2. Start the account manager 
+```commandline
+cd account-manager
+mvn spring-boot:run
+```
+
+#### Step 4:
+
+1. Go to http://localhost:8080/swagger-ui/index.html#/account-controller/createAccount
+
+2Create an account entering a request body like this:
 
 ```json
 {
@@ -46,8 +62,9 @@ The listener will receive the change and display a message like this:
 
 ```text
 Received CDC create for account 666 with balance 1000000.00
+```
 
-#### Step 4:
+#### Step 5:
 
 Connect to kafka ui at http://localhost:8081
 - Click "topics"
