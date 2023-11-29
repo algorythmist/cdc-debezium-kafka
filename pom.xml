@@ -12,7 +12,7 @@
 
     <modules>
         <module>account-manager</module>
-        <module>account-receiver</module>
+        <module>account-consumer</module>
     </modules>
 
 </project>

@@ -32,7 +32,7 @@ Start the spring boot applications.
 
 1. Start the message receiver
 ```commandline
-cd account-receiver
+cd account-consumer
 mvn spring-boot:run
 ```
 

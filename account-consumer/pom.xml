@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>com.tecacet</groupId>
-    <artifactId>account-receiver</artifactId>
+    <artifactId>account-consumer</artifactId>
 
     <dependencies>
         <dependency>
