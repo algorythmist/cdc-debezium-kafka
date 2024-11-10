@@ -44,12 +44,11 @@
     </dependencies>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <h2.version>2.1.214</h2.version>
-        <lombok.version>1.18.24</lombok.version>
+        <h2.version>2.3.232</h2.version>
+        <lombok.version>1.18.34</lombok.version>
         <spring-kafka.version>2.9.6</spring-kafka.version>
     </properties>
 
