@@ -1,6 +1,7 @@
 package com.tecacet.account_receiver.listener;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tecacet.account_receiver.model.DebeziumAccount;
 import com.tecacet.account_receiver.model.DebeziumAccountMessage;
@@ -15,8 +16,12 @@ import java.math.BigInteger;
 @Slf4j
 @Component
 public class CdcChangeListener {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
+    public CdcChangeListener() {
+        objectMapper = new ObjectMapper();
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     @KafkaListener(topics = "${kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
     public void receive(String message) throws JsonProcessingException {

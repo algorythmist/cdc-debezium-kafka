@@ -1,20 +1,32 @@
-version: '3'
-
 volumes:
   mssqldata:
 
 services:
 
+#  mssql:
+#    image: mcr.microsoft.com/mssql/server:2019-latest
+#    ports:
+#      - '1433:1433'
+#    volumes:
+#      - mssqldata:/var/opt/mssql
+#      # copy the scripts to the container
+#      - ./scripts:/usr/src/app
+#    working_dir: /usr/src/app
+#    # run the Db setup script
+#    command: sh -c './entrypoint.sh & /opt/mssql/bin/sqlservr'
+#    environment:
+#      SA_PASSWORD: 'myStrongPassword123'
+#      ACCEPT_EULA: 'Y'
+#      MSSQL_AGENT_ENABLED: 'true'
+
   mssql:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    build: .  # This will use the Dockerfile above
     ports:
       - '1433:1433'
     volumes:
       - mssqldata:/var/opt/mssql
-      # copy the scripts to the container
       - ./scripts:/usr/src/app
     working_dir: /usr/src/app
-    # run the Db setup script
     command: sh -c './entrypoint.sh & /opt/mssql/bin/sqlservr'
     environment:
       SA_PASSWORD: 'myStrongPassword123'
@@ -22,7 +34,7 @@ services:
       MSSQL_AGENT_ENABLED: 'true'
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.6.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -30,7 +42,7 @@ services:
       - 22181:2181
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: confluentinc/cp-kafka:7.6.0
     depends_on:
       - zookeeper
     ports:
@@ -45,7 +57,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   debezium:
-    image: quay.io/debezium/connect:latest
+    image: quay.io/debezium/connect:2.6
     ports:
       - 8083:8083
     links:
@@ -59,7 +71,7 @@ services:
       - STATUS_STORAGE_TOPIC=connect_statuses
 
   kafka-ui:
-    image: provectuslabs/kafka-ui:latest
+    image: provectuslabs/kafka-ui:v0.7.1
     ports:
       - 8081:8080
     links:
