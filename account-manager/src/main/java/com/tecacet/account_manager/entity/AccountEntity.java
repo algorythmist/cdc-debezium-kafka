@@ -1,16 +1,16 @@
 package com.tecacet.account_manager.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Account")
+@Table(name = "account")
 @Getter
 @Setter
 @NoArgsConstructor

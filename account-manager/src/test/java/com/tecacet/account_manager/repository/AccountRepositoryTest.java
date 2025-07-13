@@ -4,6 +4,7 @@ import com.tecacet.account_manager.entity.AccountEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -37,6 +38,7 @@ class AccountRepositoryTest {
     }
 
     @Test
+    @Transactional
     void findByTest() {
         AccountEntity account = createEntity();
         Optional<AccountEntity> foundAccount = accountRepository.findByBankNameAndAccountNumber(account.getBankName(), account.getAccountNumber());
@@ -71,7 +73,6 @@ class AccountRepositoryTest {
         account.setAccountNumber("1234567890");
         account.setBalance(new BigDecimal("1000.00"));
         account.setType(AccountEntity.Type.CHECKING);
-        accountRepository.save(account);
-        return account;
+        return accountRepository.save(account);
     }
 }
