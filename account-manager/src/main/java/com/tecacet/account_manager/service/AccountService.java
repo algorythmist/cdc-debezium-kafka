@@ -5,6 +5,7 @@ import com.tecacet.account_manager.model.Account;
 import com.tecacet.account_manager.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +20,13 @@ public class AccountService {
     private final AccountMapper accountMapper;
 
     public Account createAccount(Account account) {
-        var entity = accountMapper.toEntity(account);
-        entity = accountRepository.save(entity);
+        val entity = accountMapper.toEntity(account);
+        accountRepository.save(entity);
         return accountMapper.toDto(entity);
     }
 
     public Account updateAccount(Account account) {
-        var entity = accountRepository.findByBankNameAndAccountNumber(account.getBankName(), account.getAccountNumber())
+        val entity = accountRepository.findByBankNameAndAccountNumber(account.getBankName(), account.getAccountNumber())
                 .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         accountMapper.updateCustomerFromDto(account, entity);
         return accountMapper.toDto(accountRepository.save(entity));

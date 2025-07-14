@@ -22,7 +22,7 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @Operation(summary = "Create acount")
+    @Operation(summary = "Create account")
     @PostMapping("/account")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
         log.info("Add new account = " + account.toString());
