@@ -3,22 +3,6 @@ volumes:
 
 services:
 
-#  mssql:
-#    image: mcr.microsoft.com/mssql/server:2019-latest
-#    ports:
-#      - '1433:1433'
-#    volumes:
-#      - mssqldata:/var/opt/mssql
-#      # copy the scripts to the container
-#      - ./scripts:/usr/src/app
-#    working_dir: /usr/src/app
-#    # run the Db setup script
-#    command: sh -c './entrypoint.sh & /opt/mssql/bin/sqlservr'
-#    environment:
-#      SA_PASSWORD: 'myStrongPassword123'
-#      ACCEPT_EULA: 'Y'
-#      MSSQL_AGENT_ENABLED: 'true'
-
   mssql:
     build: .  # This will use the Dockerfile above
     ports:
