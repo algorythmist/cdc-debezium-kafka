@@ -8,6 +8,7 @@ import com.tecacet.account_receiver.model.DebeziumAccountMessage;
 import com.tecacet.account_receiver.model.DebeziumMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -24,7 +25,11 @@ public class CdcChangeListener {
     }
 
     @KafkaListener(topics = "${kafka.topic}", containerFactory = "kafkaListenerContainerFactory")
-    public void receive(String message) throws JsonProcessingException {
+    public void receive(@Payload(required = false) String message) throws JsonProcessingException {
+        if (message == null) {
+            log.debug("Received tombstone record, skipping");
+            return;
+        }
         DebeziumMessage<DebeziumAccount> debeziumMessage = objectMapper.readValue(message, DebeziumAccountMessage.class);
         var payload = debeziumMessage.getPayload();
         DebeziumAccount after = payload.getAfter();
